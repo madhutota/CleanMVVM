@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -22,20 +24,44 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation project(':commonn')
+
+    implementation Deps.core
+    implementation CoroutinesLifecycleScope.lifeCycleRuntime
+    implementation JetpackCompose.composeActivity
+    implementation JetpackCompose.composeUi
+    implementation JetpackCompose.composeUiToolingPreview
+    // implementation JetpackCompose.composeMaterial
+    implementation 'androidx.compose.material3:material3:1.1.1'
+
+    testImplementation TestImplementation.junit
+    androidTestImplementation AndroidTestImplementation.junit
+    androidTestImplementation AndroidTestImplementation.espresso
+
+    androidTestImplementation ComposeAndroidTestImplementation.composeUiTest
+    debugImplementation ComposeDebugImplementation.toolingUi
+    debugImplementation ComposeDebugImplementation.manifestTest
+
+    implementation DaggerHilt.hilt
+    kapt DaggerHilt.hiltCompiler
+
+    implementation JetpackCompose.navigation
+
+
+    implementation Retrofit.retrofit
+    implementation Retrofit.gsonConvertor
+    implementation Retrofit.okHttp
 }
