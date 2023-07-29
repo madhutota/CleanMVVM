@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class GetBlogsUseCase @Inject constructor(private val blogsRepository: BlogsRepository) {
     operator fun invoke(): Flow<Resource<List<Blog>>> = flow {
-
         emit(Resource.Loading(null))
 
         try {
@@ -18,7 +17,7 @@ class GetBlogsUseCase @Inject constructor(private val blogsRepository: BlogsRepo
             emit(Resource.Success(data = response))
 
         } catch (e: Exception) {
-            emit(Resource.Error("error"))
+            emit(Resource.Error(e.message.toString()))
         }
 
 

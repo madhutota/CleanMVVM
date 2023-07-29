@@ -47,6 +47,18 @@ dependencies {
     // implementation JetpackCompose.composeMaterial
     implementation 'androidx.compose.material3:material3:1.1.1'
 
+    // paging 3
+    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+    implementation 'androidx.paging:paging-compose:1.0.0-alpha14'
+
+    // Room
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation("androidx.room:room-paging:2.5.0-alpha01")
+
+
     testImplementation TestImplementation.junit
     androidTestImplementation AndroidTestImplementation.junit
     androidTestImplementation AndroidTestImplementation.espresso
