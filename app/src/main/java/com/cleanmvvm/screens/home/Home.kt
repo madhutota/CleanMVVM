@@ -1,6 +1,8 @@
 package com.cleanmvvm.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -56,7 +58,11 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
 
     LazyColumn {
         items(list.itemCount) {
-            PostItem(it = list[it]!!)
+            PostItem(it = list[it]!!) { itemId ->
+
+                Log.e("Detail Clicked", itemId)
+                navController.navigate("details/${itemId}")
+            }
         }
 
     }
@@ -64,8 +70,8 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
 }
 
 @Composable
-fun PostItem(it: Blog) {
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
+fun PostItem(it: Blog, l: (String) -> Unit) {
+    Column(modifier = Modifier.fillMaxWidth().clickable { l.invoke(it.id) }, verticalArrangement = Arrangement.Center) {
         Spacer(modifier = Modifier.size(8.dp))
         Row(
             modifier = Modifier

@@ -4,10 +4,12 @@ import android.content.Context
 import com.commonn.Constant
 import com.data.ApiService
 import com.data.repository.BlogRepositoryImpl
+import com.data.repository.GetBlogDetailRepoImpl
 import com.data.repository.GetPagerBlogsRepoImpl
 import com.data.room.BlogDAO
 import com.data.room.BlogDataBase
 import com.domain.repository.BlogsRepository
+import com.domain.repository.GetBlogDetailRepository
 import com.domain.repository.GetPagerBlogsRepo
 import dagger.Module
 import dagger.Provides
@@ -37,6 +39,7 @@ class DataModule {
     fun provideBlogRepository(apiService: ApiService): BlogsRepository {
         return BlogRepositoryImpl(apiService)
     }
+
     @Provides
     fun provideDataBase(@ApplicationContext context: Context): BlogDataBase {
         return BlogDataBase.getInstance(context)
@@ -50,5 +53,10 @@ class DataModule {
     @Provides
     fun provideGetPagerRepo(apiService: ApiService): GetPagerBlogsRepo {
         return GetPagerBlogsRepoImpl(apiService)
+    }
+
+    @Provides
+    fun provideGetBlogDetailRepo(apiService: ApiService): GetBlogDetailRepository {
+        return GetBlogDetailRepoImpl(apiService)
     }
 }
